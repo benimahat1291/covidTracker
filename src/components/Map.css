@@ -6,3 +6,28 @@
     margin-top: 16px;
     box-shadow: 0 0 8px -4px rgba(0,0,0,0.5);
 }
+
+.popup__flag img {
+    width: 100px;
+    border-radius: 5px;
+  }
+  
+  .popup__flag {
+    height: 80px;
+    width: 100%;
+    background-size: cover;
+    border-radius: 8px;
+  }
+  
+  .popup__confirmed,
+  .popup__deaths,
+  .popup__recovered {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  .popup__name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+  }
