@@ -29,6 +29,10 @@ body {
     justify-content: space-between;
 }
 
+.app__graphHeader {
+    margin-top: 1rem;
+}
+
 @media (max-width: 990px) {
     .app {
         flex-direction: column;
