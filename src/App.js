@@ -7,7 +7,16 @@ import Map from "./components/Map"
 function App() {
 
     const [countries, setCountries] = useState([]);
-    const [country, setCountry] = useState('worldwide')
+    const [country, setCountry] = useState('worldwide');
+    const [countryInfo, setCountryInfo] = useState({});
+
+    useEffect(() => {
+        fetch("https://disease.sh/v3/covid-19/all")
+        .then(response => response.json())
+        .then(data => {
+            setCountryInfo(data);
+        });
+    },[])
 
     useEffect(() => {
         //async -> request to server, wait... => do something
@@ -29,9 +38,21 @@ function App() {
 
     const onCountryChange = async (event) => {
         const countryCode = event.target.value;
-        setCountry(countryCode)
-        // console.log("country", countryCode)
+        setCountry(countryCode);
+        const url = countryCode === 'worldwide' ? "https://disease.sh/v3/covid-19/all" : 
+        `https://disease.sh/v3/covid-19/countries/${countryCode}`
+
+        await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setCountry(countryCode)
+            setCountryInfo(data)
+        })
+
     }
+
+    console.log("CountryINFO >> ")
+    console.log(countryInfo)
 
     return (
         <div className="app">
@@ -50,9 +71,9 @@ function App() {
                     </FormControl>
                 </div>
                 <div className="app__stats">
-                    <InfoBox title="Coronavirus Cases" cases={20001} total={1234234} />
-                    <InfoBox title="Recovered" cases={3000} total={31423423} />
-                    <InfoBox title="Deaths" cases={4000} total={2424245} />
+                    <InfoBox title="Coronavirus Cases" cases={countryInfo.todayCases} total={countryInfo.cases} />
+                    <InfoBox title="Recovered" cases={countryInfo.todayRecovered} total={countryInfo.recovered} />
+                    <InfoBox title="Deaths" cases={countryInfo.todayDeaths} total={countryInfo.deaths} />
                 </div>
                 <Map />
             </div>
